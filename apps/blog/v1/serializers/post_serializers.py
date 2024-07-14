@@ -2,7 +2,7 @@ from rest_framework import serializers
 from apps.blog.models import Post
 
 class PostInputSerializer(serializers.Serializer):
-    title = serializers.CharField(min_length=10, max_length=20)
+    title = serializers.CharField()
     description = serializers.CharField()
 
 

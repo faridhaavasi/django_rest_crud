@@ -4,16 +4,16 @@ from apps.common.models import BaseModel
 from django.contrib.auth.models import User
 
 
-class Post(BaseModel):
-    auther = models.ForeignKey(User,
-                               on_delete=models.CASCADE,
-                               related_name='posts',
-                               db_index=True)
-    tite = models.CharField(max_length=20)
+from django.db import models
+from django.contrib.auth.models import User
+
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
     description = models.TextField()
 
     def __str__(self):
-        return f'{self.tite}-{self.auther.username}'
+        return f'{self.title}-{self.author.username}'
 
     class Meta:
         verbose_name = 'post'
