@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from apps.blog.models import Post
 
 
-class PostsShow(APIView):
+class PostsShowDetail(APIView):
     serializers_class = PostOutputSerializer
 
     @extend_schema(responses=serializers_class)
@@ -23,4 +23,13 @@ class PostsShow(APIView):
             status_code=status.HTTP_200_OK,
             code=response_code.OK,
             result={'result': serializer.data, 'code': response_code.OK},
-            )
+        )
+    @extend_schema(responses=serializers_class)
+    def get(self, request, pk):
+        instance = select_post_specific_instance(pk=pk)
+        serializer = self.serializers_class(instance=instance)
+        return base_response(
+            status_code=status.HTTP_200_OK,
+            code=response_code.OK,
+            result={'result': serializer.data, 'code': response_code.OK},
+        )
