@@ -6,5 +6,5 @@ def select_post_all() -> QuerySet:
     return Post.objects.all()
 
 
-def select_post_specific_instance(pk:int) -> QuerySet:
+def select_post_specific_instance(pk: int) -> Post:
     return Post.objects.get(pk=pk)
