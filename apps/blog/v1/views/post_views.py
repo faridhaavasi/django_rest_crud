@@ -41,9 +41,10 @@ class CreatPost(APIView):
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
+
         if serializer.is_valid():
             post_create_instance(
-                author=request.user,
+                author_id=request.user.id,
                 title=serializer.validated_data.get("title"),
                 description=serializer.validated_data.get("description")
 

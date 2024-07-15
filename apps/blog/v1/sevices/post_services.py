@@ -1,9 +1,9 @@
 from apps.blog.models import Post
 from django.contrib.auth.models import User
 
-def post_create_instance(author: User, title: str, description: str) -> Post:
+def post_create_instance(author_id: int, title: str, description: str) -> Post:
     return Post.objects.create(
-        author=author,
+        author_id=author_id,
         title=title,
         description=description
     )
