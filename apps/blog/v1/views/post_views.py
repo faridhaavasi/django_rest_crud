@@ -56,4 +56,20 @@ class CreatPost(APIView):
             )
         return base_response_with_error(status_code=status.is_server_error(code=response_code.BAD_REQUEST),
                                         code=response_code.BAD_REQUEST,
+                                        error="data is not valid",)
+
+class UpdatePost(APIView):
+    serializer_class = PostInputSerializer
+    def put(self, request, pk):
+        instance = Post.objects.get(pk=pk)
+        serializer = self.serializer_class(instance=instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            post_update_instance(pk=pk, **serializer.validated_data)
+            return base_response(
+                status_code=status.HTTP_200_OK,
+                code=response_code.OK,
+                result={'result': serializer.data, 'code': response_code.OK},
+            )
+        return base_response_with_error(status_code=status.is_server_error(code=response_code.BAD_REQUEST),
+                                        code=response_code.BAD_REQUEST,
                                         error="data is not valid", )

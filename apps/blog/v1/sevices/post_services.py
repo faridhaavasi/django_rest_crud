@@ -10,7 +10,11 @@ def post_create_instance(author_id: int, title: str, description: str) -> Post:
 
 def post_update_instance(pk: int, **kwargs) -> Post:
     instance = Post.objects.get(pk=pk)
-    for attr, value in kwargs.items():
-        setattr(instance, attr, value)
-    instance.save()
-    return instance
+    if instance:
+
+        for attr, value in kwargs.items():
+            setattr(instance, attr, value)
+            instance.save()
+            return instance
+    return 'object  dosnt exists'
+
