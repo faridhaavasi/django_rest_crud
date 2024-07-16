@@ -3,7 +3,7 @@ from apps.api.response import base_response, base_response_with_error
 from rest_framework import status
 from apps.api import response_code
 from apps.blog.v1.serializers.post_serializers import PostInputSerializer, PostOutputSerializer
-from apps.blog.v1.selectors.pst_selectors import select_post_all, select_post_specific_instance
+from apps.blog.v1.selectors.pst_selectors import select_post_all, select_post_specific_instance, delete_post
 from apps.blog.v1.sevices.post_services import post_create_instance, post_update_instance
 from drf_spectacular.utils import extend_schema, OpenApiRequest, OpenApiResponse
 from rest_framework.response import Response
@@ -73,3 +73,10 @@ class UpdatePost(APIView):
         return base_response_with_error(status_code=status.is_server_error(code=response_code.BAD_REQUEST),
                                         code=response_code.BAD_REQUEST,
                                         error="data is not valid", )
+
+
+class DeletePost(APIView):
+    def delete(self, request, pk):
+        delete_post(pk=pk)
+        return base_response(code=response_code.OK, result={'message': 'deleted'}, status_code=status.HTTP_200_OK)
+
